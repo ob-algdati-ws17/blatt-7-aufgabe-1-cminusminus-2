@@ -5,44 +5,36 @@
 
 using namespace std;
 
-/// An self balancing avl tree.
-/// Implementation logic taken from slides. Working without calculating or saving the height!
 class AvlTree {
 private:
 
-    /// the two different types of childs.
     enum Child{
         left, right
     };
-    /// The struct containing all information about a node.
+
     struct Node {
         ~Node();
 
-        /// Creates a new node.
         Node(int const);
 
-        /// Creates a new node with given left and right child.
         Node(int const, Node *, Node *);
 
-        /// Gets the amount of child nodes.
-        /// \return the amount of child nodes that are attached to this node.
         int childs() const;
-        /// Gets the left or right child node depending on the parameter.
-        /// \return the child. (May be nullptr!)
+
         Node *getChild(Child) const;
-        /// The key of the node.
+
         int key;
-        /// The current balance of the node (Shal only be between -1 and 1)
+
         int balance = 0;
-        /// The left child. Nullptr if a leaf.
+
         Node *left = nullptr;
-        /// The right child. Nullptr if a leaf.
+
         Node *right = nullptr;
-        /// The previous node of the node. Nullptr if this node is the root.
+
         Node *previous = nullptr;
     };
 
-    /// The root of the tree.
+
     Node *head = nullptr;
 
     /// Rotates the (sub)tree leftwards and returns the root of the new (sub)tree
