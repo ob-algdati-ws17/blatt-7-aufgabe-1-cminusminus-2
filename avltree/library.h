@@ -23,6 +23,7 @@ private:
 
         /// Creates a new node with given left and right child.
         Node(int const, Node *, Node *);
+
         /// Gets the amount of child nodes.
         /// \return the amount of child nodes that are attached to this node.
         int childs() const;
@@ -39,28 +40,26 @@ private:
         Node *right = nullptr;
         /// The previous node of the node. Nullptr if this node is the root.
         Node *previous = nullptr;
-
-
     };
 
     /// The root of the tree.
-    Node *root = nullptr;
+    Node *head = nullptr;
 
     /// Rotates the (sub)tree leftwards and returns the root of the new (sub)tree
     /// \return the root of the new rotated (sub)tree.
-    Node* rotateLeft(Node*);
+    Node* rotL(Node*);
 
     /// Rotates the (sub)tree rightwards and returns the root of the new (sub)tree
     /// \return the root of the new rotated (sub)tree.
-    Node* rotateRight(Node*);
+    Node* rotR(Node*);
 
     /// Rotates the (sub)tree leftwards and than rightwards and returns the root of the new (sub)tree
     /// \return the root of the new rotated (sub)tree.
-    Node* rotateLeftRight(Node*);
+    Node* rotLR(Node*);
 
     /// Rotates the (sub)tree rightwards and than leftwards and returns the root of the new (sub)tree
     /// \return the root of the new rotated (sub)tree.
-    Node* rotateRightLeft(Node*);
+    Node* rotRL(Node*);
 
     /// The (recursive) logic after inserting a node.
     void upin(Node*);
@@ -88,7 +87,7 @@ private:
     /// Fixes balances after deleting a node.
     void fixBalancesDelete(Node*);
 
-    /// Fixes balaces of the left or right sub node after deleting a node.
+    /// Fixes balances of the left or right sub node after deleting a node.
     void fixBalancesChild(const Node*, Child) const;
 
 public:
