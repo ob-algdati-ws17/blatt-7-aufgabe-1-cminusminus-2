@@ -174,3 +174,29 @@ bool AvlTree::insert(int const newKey) {
         upin(tmp);
     }
 }
+
+
+void AvlTree::upin(AvlTree::Node *input) {
+    if (input != nullptr && input->previous != nullptr) {
+        auto previous = input->previous;
+        if (input == previous->left) {
+            if (previous->balance == -1 && input->balance == -1) rotR(previous);
+            else if (previous->balance == -1 && input->balance == 1) rotLR(previous);
+            else if (previous->balance == 1) previous->balance = 0;
+            else if (previous->balance == 0) {
+                previous->balance = -1;
+                upin(previous);
+            }
+            return;
+        } else {
+            if (previous->balance == 1 && input->balance == -1) rotRL(previous);
+            else if (previous->balance == 1 && input->balance == 1) rotL(previous);
+            else if (previous->balance == -1) previous->balance = 0;
+            else if (previous->balance == 0) {
+                previous->balance = 1;
+                upin(previous);
+            }
+            return;
+        }
+    }
+}
