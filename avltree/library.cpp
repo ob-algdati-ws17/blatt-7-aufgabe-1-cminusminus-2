@@ -205,8 +205,77 @@ void AvlTree::upin(AvlTree::Node *input) {
     }
 }
 
-
 AvlTree &operator+=(AvlTree &avlTree, int const avl) {
     avlTree.insert(avl);
     return avlTree;
 }
+
+void AvlTree::upout(Node *node) {
+
+
+    if (node->previous) {
+
+        //left side
+        if (node == node->previous->left) {
+            if (node->previous->balance == -1) {
+                node->previous->balance = 0;
+                upout(node->previous);
+            } else if (node->previous->balance == 0) {
+                node->previous->balance = 1;
+                return;
+            } else {
+                if (node->previous->right->balance == 0) {
+                    Node *newRoot = rotL(node->previous);
+                    newRoot->balance = -1;
+                    newRoot->left->balance = 1;
+                    newRoot->left->left->balance = 0;
+                } else if (node->previous->right->balance == 1) {
+                    Node *newRoot = rotL(node->previous);
+                    newRoot->balance = 0;
+                    newRoot->left->balance = 0;
+                    newRoot->left->left->balance = 0;
+                } else {
+                    //Doppelrotation rechts-links
+                    //fehlt noch newRoot->left / right -> balance;
+                    Node *newRoot = rotRL(node->previous);
+                    newRoot->balance = 0;
+                    newRoot->left->left->balance = 0;
+                    upout(newRoot);
+                }
+            }
+
+            //right side
+
+        }else {
+                if (node->previous->right == node) {
+                    if (node->previous->balance == -1) {
+                        node->previous->balance = 0;
+                        upout(node->previous);
+                    } else if (node->previous->balance == 0) {
+                        node->previous->balance = 0;
+                        return;
+                    } else {
+                        if (node->previous->left->balance == 0) {
+                            Node *newRoot = rotR(node->previous);
+                            newRoot->balance = -1;
+                            newRoot->right->balance = 1;
+                            newRoot->right->right->balance = 0;
+                        } else if (node->previous->left->balance == 1) {
+                            Node *newRoot = rotR(node->previous);
+                            newRoot->balance = 0;
+                            newRoot->right->balance = 0;
+                            newRoot->right->right->balance = 0;
+                        } else {
+                            //Doppelrotation links-rechts
+                            //fehlt noch newRoot->left / right -> balance;
+                            Node *newRoot = rotLR(node->previous);
+                            newRoot->balance = 0;
+                            newRoot->right->right->balance = 0;
+                            upout(newRoot);
+                    }
+                }
+            }
+        }
+    }
+}
+
