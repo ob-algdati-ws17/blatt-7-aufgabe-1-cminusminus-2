@@ -135,6 +135,10 @@ int AvlTree::height(AvlTree::Node* node) {
     return max(height(node->left), height(node->right)) + 1;
 }
 
+bool AvlTree::isBalanced() {
+    isBalanced(head);
+}
+
 bool AvlTree::isBalanced(Node* node) {
     if (node == nullptr) return true;
     int heightLeft = height(node->left);
@@ -199,4 +203,10 @@ void AvlTree::upin(AvlTree::Node *input) {
             return;
         }
     }
+}
+
+
+AvlTree &operator+=(AvlTree &avlTree, int const avl) {
+    avlTree.insert(avl);
+    return avlTree;
 }
