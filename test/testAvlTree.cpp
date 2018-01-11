@@ -50,13 +50,6 @@ TEST(AvlTreeTest, Insert_RightRotateForce) {
 }
 
 
-TEST(AvlTreeTest, OperatorOutput){
-    AvlTree tree;
-    tree.insert(0);
-    cout << tree;
-}
-
-
 TEST(AvlTreeTest, OperatorAdd){
     AvlTree tree;
     tree += 2;
@@ -119,4 +112,9 @@ TEST(AvlTreeTest, OperatorAdd){
 //TEST(AvlTreeTest, RemoveEmptyTree) {
 //    AvlTree tree;
 //    ASSERT_FALSE(tree.remove(0));
+//}
+//TEST(AvlTreeTest, OperatorOutput){
+//    AvlTree tree;
+//    tree.insert(0);
+//    cout << tree;
 //}
