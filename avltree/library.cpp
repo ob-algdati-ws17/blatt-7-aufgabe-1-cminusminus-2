@@ -1,6 +1,4 @@
 #include "library.h"
-#include <iostream>
-#include <iomanip>
 
 /*
  * Constructor
@@ -25,6 +23,13 @@ AvlTree::Node::~Node() {
 }
 
 /*
+ * Destructor
+ */
+AvlTree::~AvlTree() {
+    if (head != nullptr) delete head;
+}
+
+/*
  * Number of Childs of the Node.
  */
 int AvlTree::Node::childs() const {
@@ -40,7 +45,7 @@ AvlTree::Node *AvlTree::Node::getChild(Child c) const {
 }
 
 bool AvlTree::search(int const key) const {
-    Node *tmp = head;
+    auto tmp = head;
     while (tmp != nullptr) {
         if (key == tmp->key) return true;
         if (key < tmp->key) tmp = tmp->left;
@@ -52,13 +57,82 @@ bool AvlTree::search(int const key) const {
     return false;
 }
 
-AvlTree::Node* AvlTree::rotateLeft(Node* node) {
+/*
+ * Case: Rotate Left
+ */
+AvlTree::Node *AvlTree::rotL(AvlTree::Node *node) {
+    auto rl = node->right->left, p = node->previous, r = node->right;
+    if (p != nullptr) {
+        if (p->left != node) p->right = r;
+        else p->left = r;
+        r->previous = p;
+    } else {
+        head = r;
+        r->previous = nullptr;
+    }
+    r->left = node;
+    node->previous = r;
+    node->right = rl;
+    if (rl) rl->previous = node;
+    node->balance = 0;
+    r->balance = 0;
+    return r;
+};
 
-}
+/*
+ * Case: Rotate Right
+ */
+AvlTree::Node *AvlTree::rotR(AvlTree::Node *node) {
+    auto lr = node->left->right, p = node->previous, l = node->left;
+    if (p == nullptr) {
+        head = l;
+        l->previous = nullptr;
+    } else {
+        if (p->left != node) p->right = l;
+        else p->left = l;
+        l->previous = p;
+    }
+    l->right = node;
+    node->previous = l;
+    node->left = lr;
+    if (lr) lr->previous = node;
+    l->balance = 0;
+    node->balance = 0;
+    return l;
+};
 
-int AvlTree::height(Node* node) {
+
+/*
+ * Case: Rotate Right, Left
+ */
+AvlTree::Node *AvlTree::rotRL(AvlTree::Node *input) {
+    auto tmp = input->right->left;
+    bool lessThanLeft = true;
+    if (tmp->balance == -1) lessThanLeft = false;
+    rotR(input->right);
+    auto reTurn = rotL(input);
+    if (!lessThanLeft && reTurn->right->childs() != 0) reTurn->left->balance = -1;
+    else if (lessThanLeft && reTurn->left->childs() != 0) reTurn->right->balance = 1;
+    return reTurn;
+};
+
+/*
+ * Case: Rotate Left, Right
+ */
+AvlTree::Node *AvlTree::rotLR(AvlTree::Node *node) {
+    auto tmp = node->left->right;
+    bool lessThanRight = true;
+    if (tmp->balance == -1) lessThanRight = false;
+    rotL(node->left);
+    auto reTurn = rotR(node);
+    if (lessThanRight && reTurn->left->childs() != 0) reTurn->left->balance = -1;
+    else if ( !lessThanRight && reTurn->right->childs() != 0) reTurn->right->balance = 1;
+    return reTurn;
+};
+
+int AvlTree::height(AvlTree::Node* node) {
     if (node == nullptr) return 0;
-    return 1 + max(height(node->left), height(node->right));
+    return max(height(node->left), height(node->right)) + 1;
 }
 
 bool AvlTree::isBalanced(Node* node) {
@@ -69,7 +143,7 @@ bool AvlTree::isBalanced(Node* node) {
 }
 
 bool AvlTree::insert(int const newKey) {
-    Node *insert = new Node(newKey);
+    auto insert = new Node(newKey);
     if (head == nullptr) {
         head = insert;
         return true;
@@ -100,5 +174,3 @@ bool AvlTree::insert(int const newKey) {
         upin(tmp);
     }
 }
-
-
