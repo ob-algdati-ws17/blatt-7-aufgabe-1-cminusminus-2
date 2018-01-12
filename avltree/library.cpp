@@ -357,3 +357,56 @@ void AvlTree::deleteWithoutChild(Node *remove) {
     }
     delete remove;
 }
+
+void AvlTree::fixBalancesDelete(Node *node) {
+
+    //left side
+    if(node->getChild(left)->childs() == 2) {
+        node->getChild(left)->balance = 0;
+    } else if(node->getChild(left)->right) {
+        node->getChild(left)->balance = 1;
+    } else if(node->getChild(left)->left) {
+        node->getChild(left)->balance = -1;
+    } else {
+        node->getChild(left)->balance = 0;
+    }
+
+    //right side
+    if(node->getChild(right)->childs() == 2) {
+        node->getChild(right)->balance = 0;
+    } else if(node->getChild(right)->right) {
+        node->getChild(right)->balance = 1;
+    } else if(node->getChild(right)->left) {
+        node->getChild(right)->balance = -1;
+    } else {
+        node->getChild(right)->balance = 0;
+    }
+
+    if(node->left->childs() == 0 && node->right->childs() > 0) {
+        node->balance = 1;
+    } else if(node->left->childs() > 0 && node->right->childs() == 0) {
+        node->balance = -1;
+    } else {
+        upout(node);
+    }
+}
+
+void AvlTree::deleteWithOneChild(Node *node) {
+    if(node->left == nullptr) {
+        Node *tmp = node->right;
+        node->key = tmp->key;
+        node->left = nullptr;
+        node->right = nullptr;
+        node->balance = 0;
+        if(node->previous) upout(node);
+        delete tmp;
+    } else {
+        Node *tmp = node->left;
+        node->key = tmp->key;
+        node->left = nullptr;
+        node->right = nullptr;
+        node->balance = 0;
+        if(node->previous) upout(node);
+        delete tmp;
+    }
+}

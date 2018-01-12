@@ -76,9 +76,6 @@ private:
     /// Fixes balances after deleting a node.
     void fixBalancesDelete(Node*);
 
-    /// Fixes balances of the left or right sub node after deleting a node.
-    void fixBalancesChild(const Node*, Child) const;
-
 public:
 
     /// Destructor for the tree. Deletes also all nodes
@@ -106,7 +103,7 @@ public:
 
     /// Outputs the tree.
     /// \return the stream containing the output information.
-    friend ostream &operator<<(ostream &, AvlTree &);
+    //friend ostream &operator<<(ostream &, AvlTree &);
 
     /// Tests whether the tree is balanced (or not). Only for testing and debug purpose. Performance is aweful!
     /// \return true if balanced, otherwise false.
