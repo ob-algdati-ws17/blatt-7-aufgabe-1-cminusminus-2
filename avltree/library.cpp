@@ -279,3 +279,81 @@ void AvlTree::upout(Node *node) {
     }
 }
 
+AvlTree& operator-=(AvlTree &tree, int const avl) {
+    tree.remove(avl);
+    return tree;
+}
+
+bool AvlTree::remove(int const removeKey) {
+    if(head == nullptr) {
+        return false;
+    }
+    Node *node = head;
+    while(true) {
+        if(removeKey == node->key) {
+            break;
+        } else if(removeKey < node->key && node->left != nullptr) {
+            node = node->left;
+        } else if(removeKey > node->key && node->right != nullptr) {
+            node = node->right;
+        } else {
+            return false;
+        }
+    }
+    int amount = node->childs();
+    if(amount == 0) {
+        deleteWithoutChild(node);
+    } else if(amount == 1) {
+        deleteWithOneChild(node);
+    } else if(amount == 2){
+
+    }
+}
+
+void AvlTree::deleteWithoutChild(Node *remove) {
+    if(remove->previous == nullptr) {
+        head = nullptr;
+    } else {
+        Node* pre = remove->previous;
+        if(remove == remove->previous->left) {
+            pre->left = nullptr;
+            if(pre->right == nullptr) {
+                pre->balance = 0;
+                upout(pre);
+            } else {
+                if(pre->right->childs() == 0) {
+                    pre->balance = 1;
+                } else {
+                    Node * node = nullptr;
+                    if(pre->right->balance == 1) {
+                        node = rotL(pre);
+                    } else {
+                        node = rotRL(pre);
+                    }
+                    fixBalancesDelete(node);
+                }
+            }
+        } else {
+            if(remove == remove->previous->right) {
+                pre->right = nullptr;
+                if(pre->left == nullptr) {
+                    pre->balance = 0;
+                    upout(pre);
+                } else {
+                    if(pre->left->childs() == 0) {
+                        pre->balance = 1;
+                    } else {
+                        Node * node = nullptr;
+                        if(pre->left->balance == -1) {
+                            node = rotR(pre);
+                        } else {
+                            node = rotLR(pre);
+                        }
+                        fixBalancesDelete(node);
+                    }
+                }
+            }
+        }
+    }
+    delete remove;
+}

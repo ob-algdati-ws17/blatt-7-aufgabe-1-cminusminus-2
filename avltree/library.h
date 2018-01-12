@@ -59,9 +59,6 @@ private:
     /// The (recursive) logic after removing a node.
     void upout(Node*);
 
-    /// Generates a human readable information about this node.
-    void display(Node*, int);
-
     /// Calculates the total height of the node's subtree.
     /// \return the height of the subtree.
     int height(Node*);
@@ -110,9 +107,6 @@ public:
     /// Outputs the tree.
     /// \return the stream containing the output information.
     friend ostream &operator<<(ostream &, AvlTree &);
-
-    /// Displays the tree on the console. Only for testing and debug purpose. Performance is aweful!
-    void display();
 
     /// Tests whether the tree is balanced (or not). Only for testing and debug purpose. Performance is aweful!
     /// \return true if balanced, otherwise false.
