@@ -69,6 +69,12 @@ private:
     /* Fixes balances after deleting a node. */
     void fixBalances(Node *);
 
+    /* Node has no child. */
+    void deleteNoChild(Node *);
+
+    /* Node has a child. */
+    void deleteOneChild(Node *);
+
 public:
 
     /* Destructor for the tree. Deletes also all nodes */
