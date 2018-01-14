@@ -319,57 +319,79 @@ bool AvlTree::remove(int const removeKey) {
         } else return false;
     }
     int amount = node->childs();
-    if (amount == 0) deleteWithoutChild(node);
-    else if (amount == 1) deleteWithOneChild(node);
-}
+    auto remove = node;
 
-void AvlTree::deleteWithoutChild(Node *remove) {
-    if (remove->previous == nullptr) {
-        head = nullptr;
-    } else {
-        auto pre = remove->previous;
-        if (remove == remove->previous->left) {
-            pre->left = nullptr;
-            if(pre->right == nullptr) {
-                pre->bal = 0;
-                upout(pre);
-            } else {
-                if (pre->right->childs() == 0) {
-                    pre->bal = 1;
-                } else {
-                    Node *node = nullptr;
-                    if(pre->right->bal == 1) {
-                        node = rotL(pre);
-                    } else {
-                        node = rotRL(pre);
-                    }
-                    fixBalances(node);
-                }
-            }
+    /* Deletes a node from the tree without any child */
+    if (amount == 0) {
+        if (remove->previous == nullptr) {
+            head = nullptr;
         } else {
-            if(remove == remove->previous->right) {
-                pre->right = nullptr;
-                if(pre->left == nullptr) {
+            auto pre = remove->previous;
+            if (remove == remove->previous->left) {
+                pre->left = nullptr;
+                if(pre->right == nullptr) {
                     pre->bal = 0;
                     upout(pre);
                 } else {
-                    if(pre->left->childs() == 0) {
+                    if (pre->right->childs() == 0) {
                         pre->bal = 1;
                     } else {
                         Node *node = nullptr;
-                        if(pre->left->bal == -1) {
-                            node = rotR(pre);
+                        if(pre->right->bal == 1) {
+                            node = rotL(pre);
                         } else {
-                            node = rotLR(pre);
+                            node = rotRL(pre);
                         }
                         fixBalances(node);
                     }
                 }
+            } else {
+                if(remove == remove->previous->right) {
+                    pre->right = nullptr;
+                    if(pre->left == nullptr) {
+                        pre->bal = 0;
+                        upout(pre);
+                    } else {
+                        if(pre->left->childs() == 0) {
+                            pre->bal = 1;
+                        } else {
+                            Node *node = nullptr;
+                            if(pre->left->bal == -1) {
+                                node = rotR(pre);
+                            } else {
+                                node = rotLR(pre);
+                            }
+                            fixBalances(node);
+                        }
+                    }
+                }
             }
         }
+        delete remove;
     }
-    delete remove;
+    /* Deletes a node from the tree with one child. */
+    else if (amount == 1) {
+        if (remove->left == nullptr) {
+            auto tmp = remove->right;
+            remove->key = tmp->key;
+            remove->left = nullptr;
+            remove->right = nullptr;
+            remove->bal = 0;
+            if (remove->previous) upout(remove);
+            delete tmp;
+        } else {
+            auto tmp = remove->left;
+            remove->key = tmp->key;
+            remove->left = nullptr;
+            remove->right = nullptr;
+            remove->bal = 0;
+            if (remove->previous) upout(remove);
+            delete tmp;
+        }
+    }
 }
+
+
 
 void AvlTree::fixBalances(Node *node) {
 
@@ -390,26 +412,6 @@ void AvlTree::fixBalances(Node *node) {
     else if (node->left->childs() > 0 && node->right->childs() == 0)
         node->bal = -1;
     else upout(node);
-}
-
-void AvlTree::deleteWithOneChild(Node *node) {
-    if (node->left == nullptr) {
-        auto tmp = node->right;
-        node->key = tmp->key;
-        node->left = nullptr;
-        node->right = nullptr;
-        node->bal = 0;
-        if (node->previous) upout(node);
-        delete tmp;
-    } else {
-        auto tmp = node->left;
-        node->key = tmp->key;
-        node->left = nullptr;
-        node->right = nullptr;
-        node->bal = 0;
-        if (node->previous) upout(node);
-        delete tmp;
-    }
 }
 
 /*

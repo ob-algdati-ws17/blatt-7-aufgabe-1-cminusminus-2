@@ -66,12 +66,6 @@ private:
      */
     bool isBalanced(Node*);
 
-    /* Deletes a node from the tree without any child */
-    void deleteWithoutChild(Node*);
-
-    /* Deletes a node from the tree with one child. */
-    void deleteWithOneChild(Node*);
-
     /* Fixes balances after deleting a node. */
     void fixBalances(Node *);
 
@@ -122,8 +116,14 @@ public:
      */
     bool isBalanced();
 
+    /*
+     * calls show(AvlTree::Node*, int) with the head.
+     */
     void show();
 
+    /*
+     * creates recursive a tree on the console.
+     */
     void show(AvlTree::Node*, int);
 
 };
