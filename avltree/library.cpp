@@ -412,6 +412,10 @@ void AvlTree::deleteWithOneChild(Node *node) {
     }
 }
 
+/*
+ * AUSGABE (COUT)
+ */
+
 void AvlTree::show() {
     show(head, 0);
 }
