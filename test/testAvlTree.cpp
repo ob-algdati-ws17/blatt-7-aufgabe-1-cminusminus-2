@@ -157,3 +157,13 @@ TEST(AvlTreeTest, HugeBalanceTest) {
     tree -= 1;
     EXPECT_TRUE(tree.isBalanced());
 }
+
+TEST(AvlTreeTest, Remove2Childs) {
+    AvlTree tree;
+    tree += 1;
+    tree += 2;
+    tree += 3;
+    tree.remove(2);
+    EXPECT_TRUE(tree.search(3));
+    EXPECT_TRUE(tree.search(1));
+}
