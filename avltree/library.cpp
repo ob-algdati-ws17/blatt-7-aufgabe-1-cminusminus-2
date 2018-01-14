@@ -72,8 +72,8 @@ AvlTree::Node *AvlTree::rotL(AvlTree::Node *node) {
     node->previous = r;
     node->right = rl;
     if (rl) rl->previous = node;
-    node->balance = 0;
-    r->balance = 0;
+    node->bal = 0;
+    r->bal = 0;
     return r;
 };
 
@@ -94,8 +94,8 @@ AvlTree::Node *AvlTree::rotR(AvlTree::Node *node) {
     node->previous = l;
     node->left = lr;
     if (lr) lr->previous = node;
-    l->balance = 0;
-    node->balance = 0;
+    l->bal = 0;
+    node->bal = 0;
     return l;
 };
 
@@ -105,11 +105,11 @@ AvlTree::Node *AvlTree::rotR(AvlTree::Node *node) {
 AvlTree::Node *AvlTree::rotRL(AvlTree::Node *node) {
     auto tmp = node->right->left;
     bool lessThanLeft = true;
-    if (tmp->balance == -1) lessThanLeft = false;
+    if (tmp->bal == -1) lessThanLeft = false;
     rotR(node->right);
     auto reTurn = rotL(node);
-    if (!lessThanLeft && reTurn->right->childs() != 0) reTurn->left->balance = -1;
-    else if (lessThanLeft && reTurn->left->childs() != 0) reTurn->right->balance = 1;
+    if (!lessThanLeft && reTurn->right->childs() != 0) reTurn->left->bal = -1;
+    else if (lessThanLeft && reTurn->left->childs() != 0) reTurn->right->bal = 1;
     return reTurn;
 };
 
@@ -119,11 +119,11 @@ AvlTree::Node *AvlTree::rotRL(AvlTree::Node *node) {
 AvlTree::Node *AvlTree::rotLR(AvlTree::Node *node) {
     auto tmp = node->left->right;
     bool lessThanRight = true;
-    if (tmp->balance == -1) lessThanRight = false;
+    if (tmp->bal == -1) lessThanRight = false;
     rotL(node->left);
     auto reTurn = rotR(node);
-    if (lessThanRight && reTurn->left->childs() != 0) reTurn->left->balance = -1;
-    else if ( !lessThanRight && reTurn->right->childs() != 0) reTurn->right->balance = 1;
+    if (lessThanRight && reTurn->left->childs() != 0) reTurn->left->bal = -1;
+    else if ( !lessThanRight && reTurn->right->childs() != 0) reTurn->right->bal = 1;
     return reTurn;
 };
 
@@ -174,15 +174,15 @@ bool AvlTree::insert(int const newKey) {
     insert->previous = tmp;
     if (newKey > tmp->key) {
         tmp->right = insert;
-        tmp->balance += 1;
+        tmp->bal += 1;
     } else if (newKey < tmp->key) {
         tmp->left = insert;
-        tmp->balance -= 1;
+        tmp->bal -= 1;
     }
     /*
-     * Wenn der balance verloren gegangen ist, balanciere mit upin erneut.
+     * Wenn der bal verloren gegangen ist, balanciere mit upin erneut.
      */
-    if (tmp->balance != 0) {
+    if (tmp->bal != 0) {
         upin(tmp);
     }
 }
@@ -192,20 +192,20 @@ void AvlTree::upin(AvlTree::Node *node) {
     if (node != nullptr && node->previous != nullptr) {
         auto prev = node->previous;
         if (node == prev->left) {
-            if (prev->balance == -1 && node->balance == -1) rotR(prev);
-            else if (prev->balance == -1 && node->balance == 1) rotLR(prev);
-            else if (prev->balance == 1) prev->balance = 0;
-            else if (prev->balance == 0) {
-                prev->balance = -1;
+            if (prev->bal == -1 && node->bal == -1) rotR(prev);
+            else if (prev->bal == -1 && node->bal == 1) rotLR(prev);
+            else if (prev->bal == 1) prev->bal = 0;
+            else if (prev->bal == 0) {
+                prev->bal = -1;
                 upin(prev);
             }
             return;
         } else {
-            if (prev->balance == 1 && node->balance == -1) rotRL(prev);
-            else if (prev->balance == 1 && node->balance == 1) rotL(prev);
-            else if (prev->balance == -1) prev->balance = 0;
-                else if (prev->balance == 0) {
-                prev->balance = 1;
+            if (prev->bal == 1 && node->bal == -1) rotRL(prev);
+            else if (prev->bal == 1 && node->bal == 1) rotL(prev);
+            else if (prev->bal == -1) prev->bal = 0;
+                else if (prev->bal == 0) {
+                prev->bal = 1;
                 upin(prev);
             }
             return;
@@ -223,32 +223,32 @@ void AvlTree::upout(Node *node) {
 
         //left side
         if (node == node->previous->left) {
-            if (node->previous->balance == -1) {
-                node->previous->balance = 0;
+            if (node->previous->bal == -1) {
+                node->previous->bal = 0;
                 upout(node->previous);
-            } else if (node->previous->balance == 0) {
-                node->previous->balance = 1;
+            } else if (node->previous->bal == 0) {
+                node->previous->bal = 1;
                 return;
             } else {
-                if (node->previous->right->balance == 0) {
+                if (node->previous->right->bal == 0) {
                     auto newRoot = rotL(node->previous);
-                    newRoot->balance = -1;
-                    newRoot->left->balance = 1;
-                    newRoot->left->left->balance = 0;
-                } else if (node->previous->right->balance == 1) {
+                    newRoot->bal = -1;
+                    newRoot->left->bal = 1;
+                    newRoot->left->left->bal = 0;
+                } else if (node->previous->right->bal == 1) {
                     Node *newRoot = rotL(node->previous);
-                    newRoot->balance = 0;
-                    newRoot->left->balance = 0;
-                    newRoot->left->left->balance = 0;
+                    newRoot->bal = 0;
+                    newRoot->left->bal = 0;
+                    newRoot->left->left->bal = 0;
                 } else {
-                    int oldQbalance = node->previous->right->left->balance;
+                    int oldQbal = node->previous->right->left->bal;
                     auto newRoot = rotRL(node->previous);
-                    newRoot->balance = 0;
-                    newRoot->left->left->balance = 0;
-                    newRoot->right->balance = 0;
-                    newRoot->left->balance = 0;
-                    if(oldQbalance == 1) newRoot->left->balance = -1;
-                    else if(oldQbalance == -1) newRoot->right->balance = 1;
+                    newRoot->bal = 0;
+                    newRoot->left->left->bal = 0;
+                    newRoot->right->bal = 0;
+                    newRoot->left->bal = 0;
+                    if(oldQbal == 1) newRoot->left->bal = -1;
+                    else if(oldQbal == -1) newRoot->right->bal = 1;
                     upout(newRoot);
                 }
             }
@@ -257,36 +257,36 @@ void AvlTree::upout(Node *node) {
 
         }else {
             if (node->previous->right == node) {
-                if (node->previous->balance == -1) {
-                    node->previous->balance = 0;
+                if (node->previous->bal == -1) {
+                    node->previous->bal = 0;
                     upout(node->previous);
-                } else if (node->previous->balance == 0) {
-                    node->previous->balance = 0;
+                } else if (node->previous->bal == 0) {
+                    node->previous->bal = 0;
                     return;
                 } else {
-                    if (node->previous->left->balance == 0) {
+                    if (node->previous->left->bal == 0) {
                         Node *newRoot = rotR(node->previous);
-                        newRoot->balance = -1;
-                        newRoot->right->balance = 1;
-                        newRoot->right->right->balance = 0;
-                    } else if (node->previous->left->balance == 1) {
+                        newRoot->bal = -1;
+                        newRoot->right->bal = 1;
+                        newRoot->right->right->bal = 0;
+                    } else if (node->previous->left->bal == 1) {
                         Node *newRoot = rotR(node->previous);
-                        newRoot->balance = 0;
-                        newRoot->right->balance = 0;
-                        newRoot->right->right->balance = 0;
+                        newRoot->bal = 0;
+                        newRoot->right->bal = 0;
+                        newRoot->right->right->bal = 0;
                     } else {
                         //Doppelrotation links-rechts
-                        //fehlt noch newRoot->left / right -> balance;
-                        int oldQbalance = node->previous->left->right->balance;
+                        //fehlt noch newRoot->left / right -> bal;
+                        int oldQbal = node->previous->left->right->bal;
                         Node *newRoot = rotLR(node->previous);
-                        newRoot->balance = 0;
-                        newRoot->right->right->balance = 0;
-                        newRoot->right->balance = 0;
-                        newRoot->left->balance = 0;
-                        if(oldQbalance == 1) {
-                            newRoot->left->balance = -1;
-                        } else if(oldQbalance == -1) {
-                            newRoot->right->balance = 1;
+                        newRoot->bal = 0;
+                        newRoot->right->right->bal = 0;
+                        newRoot->right->bal = 0;
+                        newRoot->left->bal = 0;
+                        if(oldQbal == 1) {
+                            newRoot->left->bal = -1;
+                        } else if(oldQbal == -1) {
+                            newRoot->right->bal = 1;
                         }
                         upout(newRoot);
                     }
@@ -320,21 +320,21 @@ bool AvlTree::remove(int const removeKey) {
 }
 
 void AvlTree::deleteWithoutChild(Node *remove) {
-    if(remove->previous == nullptr) {
+    if (remove->previous == nullptr) {
         head = nullptr;
     } else {
         auto pre = remove->previous;
-        if(remove == remove->previous->left) {
+        if (remove == remove->previous->left) {
             pre->left = nullptr;
             if(pre->right == nullptr) {
-                pre->balance = 0;
+                pre->bal = 0;
                 upout(pre);
             } else {
-                if(pre->right->childs() == 0) {
-                    pre->balance = 1;
+                if (pre->right->childs() == 0) {
+                    pre->bal = 1;
                 } else {
                     Node *node = nullptr;
-                    if(pre->right->balance == 1) {
+                    if(pre->right->bal == 1) {
                         node = rotL(pre);
                     } else {
                         node = rotRL(pre);
@@ -346,14 +346,14 @@ void AvlTree::deleteWithoutChild(Node *remove) {
             if(remove == remove->previous->right) {
                 pre->right = nullptr;
                 if(pre->left == nullptr) {
-                    pre->balance = 0;
+                    pre->bal = 0;
                     upout(pre);
                 } else {
                     if(pre->left->childs() == 0) {
-                        pre->balance = 1;
+                        pre->bal = 1;
                     } else {
                         Node *node = nullptr;
-                        if(pre->left->balance == -1) {
+                        if(pre->left->bal == -1) {
                             node = rotR(pre);
                         } else {
                             node = rotLR(pre);
@@ -370,21 +370,21 @@ void AvlTree::deleteWithoutChild(Node *remove) {
 void AvlTree::fixBalances(Node *node) {
 
     //left side
-    if (node->left->childs() == 2) node->left->balance = 0;
-    else if(node->left->right) node->left->balance = 1;
-    else if(node->left->left) node->left->balance = -1;
-    else node->left->balance = 0;
+    if (node->left->childs() == 2) node->left->bal = 0;
+    else if(node->left->right) node->left->bal = 1;
+    else if(node->left->left) node->left->bal = -1;
+    else node->left->bal = 0;
 
     //right side
-    if (node->right->childs() == 2) node->right->balance = 0;
-    else if(node->right->right) node->right->balance = 1;
-    else if(node->right->left) node->right->balance = -1;
-    else node->right->balance = 0;
+    if (node->right->childs() == 2) node->right->bal = 0;
+    else if(node->right->right) node->right->bal = 1;
+    else if(node->right->left) node->right->bal = -1;
+    else node->right->bal = 0;
 
     if (node->left->childs() == 0 && node->right->childs() > 0)
-        node->balance = 1;
+        node->bal = 1;
     else if (node->left->childs() > 0 && node->right->childs() == 0)
-        node->balance = -1;
+        node->bal = -1;
     else upout(node);
 }
 
@@ -394,7 +394,7 @@ void AvlTree::deleteWithOneChild(Node *node) {
         node->key = tmp->key;
         node->left = nullptr;
         node->right = nullptr;
-        node->balance = 0;
+        node->bal = 0;
         if (node->previous) upout(node);
         delete tmp;
     } else {
@@ -402,7 +402,7 @@ void AvlTree::deleteWithOneChild(Node *node) {
         node->key = tmp->key;
         node->left = nullptr;
         node->right = nullptr;
-        node->balance = 0;
+        node->bal = 0;
         if (node->previous) upout(node);
         delete tmp;
     }

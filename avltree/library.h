@@ -14,7 +14,7 @@ private:
 
         int childs() const;
         int key;
-        int balance = 0;
+        int bal = 0;
 
         Node *left = nullptr;
         Node *right = nullptr;
