@@ -237,9 +237,17 @@ void AvlTree::upout(Node *node) {
                 } else {
                     //Doppelrotation rechts-links
                     //fehlt noch newRoot->left / right -> balance;
+                    int oldQbalance = node->previous->right->left->balance;
                     Node *newRoot = rotRL(node->previous);
                     newRoot->balance = 0;
                     newRoot->left->left->balance = 0;
+                    newRoot->right->balance = 0;
+                    newRoot->left->balance = 0;
+                    if(oldQbalance == 1) {
+                        newRoot->left->balance = -1;
+                    } else if(oldQbalance == -1) {
+                        newRoot->right->balance = 1;
+                    }
                     upout(newRoot);
                 }
             }
@@ -268,9 +276,17 @@ void AvlTree::upout(Node *node) {
                         } else {
                             //Doppelrotation links-rechts
                             //fehlt noch newRoot->left / right -> balance;
+                            int oldQbalance = node->previous->left->right->balance;
                             Node *newRoot = rotLR(node->previous);
                             newRoot->balance = 0;
                             newRoot->right->right->balance = 0;
+                            newRoot->right->balance = 0;
+                            newRoot->left->balance = 0;
+                            if(oldQbalance == 1) {
+                                newRoot->left->balance = -1;
+                            } else if(oldQbalance == -1) {
+                                newRoot->right->balance = 1;
+                            }
                             upout(newRoot);
                     }
                 }
@@ -289,7 +305,7 @@ bool AvlTree::remove(int const removeKey) {
         return false;
     }
     Node *node = head;
-    while(true) {
+    while(removeKey != node->key) {
         if(removeKey == node->key) {
             break;
         } else if(removeKey < node->key && node->left != nullptr) {
@@ -330,7 +346,7 @@ void AvlTree::deleteWithoutChild(Node *remove) {
                     } else {
                         node = rotRL(pre);
                     }
-                    fixBalancesDelete(node);
+                    fixBalances(node);
                 }
             }
         } else {
@@ -349,7 +365,7 @@ void AvlTree::deleteWithoutChild(Node *remove) {
                         } else {
                             node = rotLR(pre);
                         }
-                        fixBalancesDelete(node);
+                        fixBalances(node);
                     }
                 }
             }
@@ -358,7 +374,7 @@ void AvlTree::deleteWithoutChild(Node *remove) {
     delete remove;
 }
 
-void AvlTree::fixBalancesDelete(Node *node) {
+void AvlTree::fixBalances(Node *node) {
 
     //left side
     if(node->getChild(left)->childs() == 2) {

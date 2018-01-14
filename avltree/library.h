@@ -74,7 +74,7 @@ private:
     void deleteWithOneChild(Node*);
 
     /// Fixes balances after deleting a node.
-    void fixBalancesDelete(Node*);
+    void fixBalances(Node *);
 
 public:
 
