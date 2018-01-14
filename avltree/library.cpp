@@ -1,4 +1,8 @@
 #include "library.h"
+#include <iomanip>
+#include <iostream>
+
+using namespace std;
 
 /*
  * Constructor
@@ -407,3 +411,21 @@ void AvlTree::deleteWithOneChild(Node *node) {
         delete tmp;
     }
 }
+
+void AvlTree::show() {
+    show(head, 0);
+}
+
+void AvlTree::show(AvlTree::Node *node, int offset) {
+    if (node != nullptr) {
+        show(node->right, offset + 5);
+        if (offset > 0) cout << setw(offset) << " ";
+        cout << node->key << endl;
+        show(node->left, offset + 5);
+    }
+}
+
+ostream &operator<<(ostream &stream, AvlTree &tree) {
+    tree.show();
+    return cout;
+};
