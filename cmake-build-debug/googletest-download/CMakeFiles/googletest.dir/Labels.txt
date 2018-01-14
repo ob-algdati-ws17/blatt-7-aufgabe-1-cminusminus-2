@@ -1,0 +1,14 @@
+# Target labels
+ googletest
+# Source files and their labels
+C:/Users/Nam Pham/CLionProjects/blatt-7-aufgabe-1-cminusminus-2/cmake-build-debug/googletest-download/CMakeFiles/googletest
+C:/Users/Nam Pham/CLionProjects/blatt-7-aufgabe-1-cminusminus-2/cmake-build-debug/googletest-download/CMakeFiles/googletest.rule
+C:/Users/Nam Pham/CLionProjects/blatt-7-aufgabe-1-cminusminus-2/cmake-build-debug/googletest-download/CMakeFiles/googletest-complete.rule
+C:/Users/Nam Pham/CLionProjects/blatt-7-aufgabe-1-cminusminus-2/cmake-build-debug/googletest-download/googletest-prefix/src/googletest-stamp/googletest-install.rule
+C:/Users/Nam Pham/CLionProjects/blatt-7-aufgabe-1-cminusminus-2/cmake-build-debug/googletest-download/googletest-prefix/src/googletest-stamp/googletest-mkdir.rule
+C:/Users/Nam Pham/CLionProjects/blatt-7-aufgabe-1-cminusminus-2/cmake-build-debug/googletest-download/googletest-prefix/src/googletest-stamp/googletest-download.rule
+C:/Users/Nam Pham/CLionProjects/blatt-7-aufgabe-1-cminusminus-2/cmake-build-debug/googletest-download/googletest-prefix/src/googletest-stamp/googletest-update.rule
+C:/Users/Nam Pham/CLionProjects/blatt-7-aufgabe-1-cminusminus-2/cmake-build-debug/googletest-download/googletest-prefix/src/googletest-stamp/googletest-patch.rule
+C:/Users/Nam Pham/CLionProjects/blatt-7-aufgabe-1-cminusminus-2/cmake-build-debug/googletest-download/googletest-prefix/src/googletest-stamp/googletest-configure.rule
+C:/Users/Nam Pham/CLionProjects/blatt-7-aufgabe-1-cminusminus-2/cmake-build-debug/googletest-download/googletest-prefix/src/googletest-stamp/googletest-build.rule
+C:/Users/Nam Pham/CLionProjects/blatt-7-aufgabe-1-cminusminus-2/cmake-build-debug/googletest-download/googletest-prefix/src/googletest-stamp/googletest-test.rule
