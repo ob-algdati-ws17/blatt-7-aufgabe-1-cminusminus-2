@@ -39,11 +39,9 @@ int AvlTree::Node::childs() const {
     return counter;
 }
 
-AvlTree::Node *AvlTree::Node::getChild(Child c) const {
-    if (c == Child::left) return left;
-    return right;
-}
-
+/*
+ * returns true if the key already exists
+ */
 bool AvlTree::search(int const key) const {
     auto tmp = head;
     while (tmp != nullptr) {
@@ -52,7 +50,7 @@ bool AvlTree::search(int const key) const {
         else tmp = tmp->right;
     }
     /*
-     * If there is no "key" in the tree
+     * If there no "key" found in the tree
      */
     return false;
 }
@@ -101,16 +99,15 @@ AvlTree::Node *AvlTree::rotR(AvlTree::Node *node) {
     return l;
 };
 
-
 /*
  * Case: Rotate Right, Left
  */
-AvlTree::Node *AvlTree::rotRL(AvlTree::Node *input) {
-    auto tmp = input->right->left;
+AvlTree::Node *AvlTree::rotRL(AvlTree::Node *node) {
+    auto tmp = node->right->left;
     bool lessThanLeft = true;
     if (tmp->balance == -1) lessThanLeft = false;
-    rotR(input->right);
-    auto reTurn = rotL(input);
+    rotR(node->right);
+    auto reTurn = rotL(node);
     if (!lessThanLeft && reTurn->right->childs() != 0) reTurn->left->balance = -1;
     else if (lessThanLeft && reTurn->left->childs() != 0) reTurn->right->balance = 1;
     return reTurn;
@@ -139,6 +136,9 @@ bool AvlTree::isBalanced() {
     isBalanced(head);
 }
 
+/*
+ * returns true if the height of the tree is max 1 node bigger/smaller than others
+ */
 bool AvlTree::isBalanced(Node* node) {
     if (node == nullptr) return true;
     int heightLeft = height(node->left);
@@ -147,20 +147,29 @@ bool AvlTree::isBalanced(Node* node) {
 }
 
 bool AvlTree::insert(int const newKey) {
+    /*
+     * wenn der head noch nicht existiert, wird der erste Key der Head.
+     */
     auto insert = new Node(newKey);
     if (head == nullptr) {
         head = insert;
         return true;
     }
+
     auto tmp = head;
     bool insertNow = true;
+    /*
+     * Solange die neue Stelle der Zahl nicht gefunden wurde,
+     * durchlaufe den Baum. tmp steht dann an der richtigen Stelle.
+     * tmp steht dann an dem Node, wo die isnert-Zahl drangehängt wird.
+     */
     while (insertNow) {
         if (newKey > tmp->key && tmp->right) tmp = tmp->right;
         else if (newKey < tmp->key && tmp->left) tmp = tmp->left;
         else insertNow = false;
     }
     /*
-     * connect the new node to tmp.
+     * hänge die Zahl an tmp an.
      */
     insert->previous = tmp;
     if (newKey > tmp->key) {
@@ -171,34 +180,33 @@ bool AvlTree::insert(int const newKey) {
         tmp->balance -= 1;
     }
     /*
-     * if the balance of tmp, that means the previous node, has
-     * lost balance, that means, that the tree should be balanced again.
+     * Wenn der balance verloren gegangen ist, balanciere mit upin erneut.
      */
     if (tmp->balance != 0) {
         upin(tmp);
     }
 }
 
-
-void AvlTree::upin(AvlTree::Node *input) {
-    if (input != nullptr && input->previous != nullptr) {
-        auto previous = input->previous;
-        if (input == previous->left) {
-            if (previous->balance == -1 && input->balance == -1) rotR(previous);
-            else if (previous->balance == -1 && input->balance == 1) rotLR(previous);
-            else if (previous->balance == 1) previous->balance = 0;
-            else if (previous->balance == 0) {
-                previous->balance = -1;
-                upin(previous);
+void AvlTree::upin(AvlTree::Node *node) {
+    /* */
+    if (node != nullptr && node->previous != nullptr) {
+        auto prev = node->previous;
+        if (node == prev->left) {
+            if (prev->balance == -1 && node->balance == -1) rotR(prev);
+            else if (prev->balance == -1 && node->balance == 1) rotLR(prev);
+            else if (prev->balance == 1) prev->balance = 0;
+            else if (prev->balance == 0) {
+                prev->balance = -1;
+                upin(prev);
             }
             return;
         } else {
-            if (previous->balance == 1 && input->balance == -1) rotRL(previous);
-            else if (previous->balance == 1 && input->balance == 1) rotL(previous);
-            else if (previous->balance == -1) previous->balance = 0;
-            else if (previous->balance == 0) {
-                previous->balance = 1;
-                upin(previous);
+            if (prev->balance == 1 && node->balance == -1) rotRL(prev);
+            else if (prev->balance == 1 && node->balance == 1) rotL(prev);
+            else if (prev->balance == -1) prev->balance = 0;
+                else if (prev->balance == 0) {
+                prev->balance = 1;
+                upin(prev);
             }
             return;
         }
@@ -211,8 +219,6 @@ AvlTree &operator+=(AvlTree &avlTree, int const avl) {
 }
 
 void AvlTree::upout(Node *node) {
-
-
     if (node->previous) {
 
         //left side
@@ -225,7 +231,7 @@ void AvlTree::upout(Node *node) {
                 return;
             } else {
                 if (node->previous->right->balance == 0) {
-                    Node *newRoot = rotL(node->previous);
+                    auto newRoot = rotL(node->previous);
                     newRoot->balance = -1;
                     newRoot->left->balance = 1;
                     newRoot->left->left->balance = 0;
@@ -235,19 +241,14 @@ void AvlTree::upout(Node *node) {
                     newRoot->left->balance = 0;
                     newRoot->left->left->balance = 0;
                 } else {
-                    //Doppelrotation rechts-links
-                    //fehlt noch newRoot->left / right -> balance;
                     int oldQbalance = node->previous->right->left->balance;
-                    Node *newRoot = rotRL(node->previous);
+                    auto newRoot = rotRL(node->previous);
                     newRoot->balance = 0;
                     newRoot->left->left->balance = 0;
                     newRoot->right->balance = 0;
                     newRoot->left->balance = 0;
-                    if(oldQbalance == 1) {
-                        newRoot->left->balance = -1;
-                    } else if(oldQbalance == -1) {
-                        newRoot->right->balance = 1;
-                    }
+                    if(oldQbalance == 1) newRoot->left->balance = -1;
+                    else if(oldQbalance == -1) newRoot->right->balance = 1;
                     upout(newRoot);
                 }
             }
@@ -255,39 +256,39 @@ void AvlTree::upout(Node *node) {
             //right side
 
         }else {
-                if (node->previous->right == node) {
-                    if (node->previous->balance == -1) {
-                        node->previous->balance = 0;
-                        upout(node->previous);
-                    } else if (node->previous->balance == 0) {
-                        node->previous->balance = 0;
-                        return;
+            if (node->previous->right == node) {
+                if (node->previous->balance == -1) {
+                    node->previous->balance = 0;
+                    upout(node->previous);
+                } else if (node->previous->balance == 0) {
+                    node->previous->balance = 0;
+                    return;
+                } else {
+                    if (node->previous->left->balance == 0) {
+                        Node *newRoot = rotR(node->previous);
+                        newRoot->balance = -1;
+                        newRoot->right->balance = 1;
+                        newRoot->right->right->balance = 0;
+                    } else if (node->previous->left->balance == 1) {
+                        Node *newRoot = rotR(node->previous);
+                        newRoot->balance = 0;
+                        newRoot->right->balance = 0;
+                        newRoot->right->right->balance = 0;
                     } else {
-                        if (node->previous->left->balance == 0) {
-                            Node *newRoot = rotR(node->previous);
-                            newRoot->balance = -1;
+                        //Doppelrotation links-rechts
+                        //fehlt noch newRoot->left / right -> balance;
+                        int oldQbalance = node->previous->left->right->balance;
+                        Node *newRoot = rotLR(node->previous);
+                        newRoot->balance = 0;
+                        newRoot->right->right->balance = 0;
+                        newRoot->right->balance = 0;
+                        newRoot->left->balance = 0;
+                        if(oldQbalance == 1) {
+                            newRoot->left->balance = -1;
+                        } else if(oldQbalance == -1) {
                             newRoot->right->balance = 1;
-                            newRoot->right->right->balance = 0;
-                        } else if (node->previous->left->balance == 1) {
-                            Node *newRoot = rotR(node->previous);
-                            newRoot->balance = 0;
-                            newRoot->right->balance = 0;
-                            newRoot->right->right->balance = 0;
-                        } else {
-                            //Doppelrotation links-rechts
-                            //fehlt noch newRoot->left / right -> balance;
-                            int oldQbalance = node->previous->left->right->balance;
-                            Node *newRoot = rotLR(node->previous);
-                            newRoot->balance = 0;
-                            newRoot->right->right->balance = 0;
-                            newRoot->right->balance = 0;
-                            newRoot->left->balance = 0;
-                            if(oldQbalance == 1) {
-                                newRoot->left->balance = -1;
-                            } else if(oldQbalance == -1) {
-                                newRoot->right->balance = 1;
-                            }
-                            upout(newRoot);
+                        }
+                        upout(newRoot);
                     }
                 }
             }
@@ -306,31 +307,23 @@ bool AvlTree::remove(int const removeKey) {
     }
     Node *node = head;
     while(removeKey != node->key) {
-        if(removeKey == node->key) {
-            break;
-        } else if(removeKey < node->key && node->left != nullptr) {
+        if(removeKey == node->key) break;
+        else if(removeKey < node->key && node->left != nullptr) {
             node = node->left;
         } else if(removeKey > node->key && node->right != nullptr) {
             node = node->right;
-        } else {
-            return false;
-        }
+        } else return false;
     }
     int amount = node->childs();
-    if(amount == 0) {
-        deleteWithoutChild(node);
-    } else if(amount == 1) {
-        deleteWithOneChild(node);
-    } else if(amount == 2){
-
-    }
+    if (amount == 0) deleteWithoutChild(node);
+    else if (amount == 1) deleteWithOneChild(node);
 }
 
 void AvlTree::deleteWithoutChild(Node *remove) {
     if(remove->previous == nullptr) {
         head = nullptr;
     } else {
-        Node* pre = remove->previous;
+        auto pre = remove->previous;
         if(remove == remove->previous->left) {
             pre->left = nullptr;
             if(pre->right == nullptr) {
@@ -340,7 +333,7 @@ void AvlTree::deleteWithoutChild(Node *remove) {
                 if(pre->right->childs() == 0) {
                     pre->balance = 1;
                 } else {
-                    Node * node = nullptr;
+                    Node *node = nullptr;
                     if(pre->right->balance == 1) {
                         node = rotL(pre);
                     } else {
@@ -359,7 +352,7 @@ void AvlTree::deleteWithoutChild(Node *remove) {
                     if(pre->left->childs() == 0) {
                         pre->balance = 1;
                     } else {
-                        Node * node = nullptr;
+                        Node *node = nullptr;
                         if(pre->left->balance == -1) {
                             node = rotR(pre);
                         } else {
@@ -377,52 +370,40 @@ void AvlTree::deleteWithoutChild(Node *remove) {
 void AvlTree::fixBalances(Node *node) {
 
     //left side
-    if(node->getChild(left)->childs() == 2) {
-        node->getChild(left)->balance = 0;
-    } else if(node->getChild(left)->right) {
-        node->getChild(left)->balance = 1;
-    } else if(node->getChild(left)->left) {
-        node->getChild(left)->balance = -1;
-    } else {
-        node->getChild(left)->balance = 0;
-    }
+    if (node->left->childs() == 2) node->left->balance = 0;
+    else if(node->left->right) node->left->balance = 1;
+    else if(node->left->left) node->left->balance = -1;
+    else node->left->balance = 0;
 
     //right side
-    if(node->getChild(right)->childs() == 2) {
-        node->getChild(right)->balance = 0;
-    } else if(node->getChild(right)->right) {
-        node->getChild(right)->balance = 1;
-    } else if(node->getChild(right)->left) {
-        node->getChild(right)->balance = -1;
-    } else {
-        node->getChild(right)->balance = 0;
-    }
+    if (node->right->childs() == 2) node->right->balance = 0;
+    else if(node->right->right) node->right->balance = 1;
+    else if(node->right->left) node->right->balance = -1;
+    else node->right->balance = 0;
 
-    if(node->left->childs() == 0 && node->right->childs() > 0) {
+    if (node->left->childs() == 0 && node->right->childs() > 0)
         node->balance = 1;
-    } else if(node->left->childs() > 0 && node->right->childs() == 0) {
+    else if (node->left->childs() > 0 && node->right->childs() == 0)
         node->balance = -1;
-    } else {
-        upout(node);
-    }
+    else upout(node);
 }
 
 void AvlTree::deleteWithOneChild(Node *node) {
-    if(node->left == nullptr) {
-        Node *tmp = node->right;
+    if (node->left == nullptr) {
+        auto tmp = node->right;
         node->key = tmp->key;
         node->left = nullptr;
         node->right = nullptr;
         node->balance = 0;
-        if(node->previous) upout(node);
+        if (node->previous) upout(node);
         delete tmp;
     } else {
-        Node *tmp = node->left;
+        auto tmp = node->left;
         node->key = tmp->key;
         node->left = nullptr;
         node->right = nullptr;
         node->balance = 0;
-        if(node->previous) upout(node);
+        if (node->previous) upout(node);
         delete tmp;
     }
 }
