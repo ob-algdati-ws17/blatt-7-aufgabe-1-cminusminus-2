@@ -4,8 +4,8 @@
   ##### Build status
   *  [![Build Status](https://travis-ci.org/ob-algdati-ws17/blatt-7-aufgabe-1-goteam.svg?branch=master)](https://travis-ci.org/ob-algdati-ws17/blatt-7-aufgabe-1-goteam)
   
-    ##### Test and Deploy
-  blatt-7-aufgabe-1-cminusminus-2/docs/html/index.html
+  ##### Doxygen
+https://ob-algdati-ws17.github.io/blatt-7-aufgabe-1-cminusminus-2/
 
   ##### Test and Deploy
  * Travis: 
