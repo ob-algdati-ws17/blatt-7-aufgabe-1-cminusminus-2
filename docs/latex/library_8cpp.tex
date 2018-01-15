@@ -1,0 +1,44 @@
+\hypertarget{library_8cpp}{}\section{avltree/library.cpp File Reference}
+\label{library_8cpp}\index{avltree/library.\+cpp@{avltree/library.\+cpp}}
+{\ttfamily \#include \char`\"{}library.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \& \mbox{\hyperlink{library_8cpp_a9af41f4f481f26e0c954be40e2fc7a84}{operator+=}} (\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \&avl\+Tree, int const avl)
+\item 
+\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \& \mbox{\hyperlink{library_8cpp_a248de39ce7d9df93a7510bffcdca0e5a}{operator-\/=}} (\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \&tree, int const avl)
+\item 
+ostream \& \mbox{\hyperlink{library_8cpp_a5a6c2a3b839a72f3a5d9e7af10fc7a27}{operator$<$$<$}} (ostream \&stream, \mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \&tree)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{library_8cpp_a9af41f4f481f26e0c954be40e2fc7a84}\label{library_8cpp_a9af41f4f481f26e0c954be40e2fc7a84}} 
+\index{library.\+cpp@{library.\+cpp}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!library.\+cpp@{library.\+cpp}}
+\subsubsection{\texorpdfstring{operator+=()}{operator+=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_avl_tree}{Avl\+Tree}}\& operator+= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \&}]{avl\+Tree,  }\item[{int const}]{avl }\end{DoxyParamCaption})}
+
+Add operator \begin{DoxyReturn}{Returns}
+a tree with the new key inserted. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{library_8cpp_a248de39ce7d9df93a7510bffcdca0e5a}\label{library_8cpp_a248de39ce7d9df93a7510bffcdca0e5a}} 
+\index{library.\+cpp@{library.\+cpp}!operator-\/=@{operator-\/=}}
+\index{operator-\/=@{operator-\/=}!library.\+cpp@{library.\+cpp}}
+\subsubsection{\texorpdfstring{operator-\/=()}{operator-=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_avl_tree}{Avl\+Tree}}\& operator-\/= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \&}]{tree,  }\item[{int const}]{avl }\end{DoxyParamCaption})}
+
+Remove operator \begin{DoxyReturn}{Returns}
+a tree without the key to delete. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{library_8cpp_a5a6c2a3b839a72f3a5d9e7af10fc7a27}\label{library_8cpp_a5a6c2a3b839a72f3a5d9e7af10fc7a27}} 
+\index{library.\+cpp@{library.\+cpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!library.\+cpp@{library.\+cpp}}
+\subsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}}
+{\footnotesize\ttfamily ostream\& operator$<$$<$ (\begin{DoxyParamCaption}\item[{ostream \&}]{stream,  }\item[{\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \&}]{tree }\end{DoxyParamCaption})}
+
+Outputs the tree. \begin{DoxyReturn}{Returns}
+the stream containing the output information. 
+\end{DoxyReturn}

@@ -1,0 +1,168 @@
+\hypertarget{class_avl_tree}{}\section{Avl\+Tree Class Reference}
+\label{class_avl_tree}\index{Avl\+Tree@{Avl\+Tree}}
+
+
+{\ttfamily \#include $<$library.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_avl_tree_ada89cb30925d36a56e3aab8768752468}{$\sim$\+Avl\+Tree}} ()
+\begin{DoxyCompactList}\small\item\em Destructor for the tree. Deletes also all nodes. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_avl_tree_a62f478c45b1505e637617a5a8edb9374}{search}} (int const) const
+\item 
+bool \mbox{\hyperlink{class_avl_tree_a251736611b07cd83fe02f399288fc92e}{insert}} (int const)
+\item 
+bool \mbox{\hyperlink{class_avl_tree_a9f580161de922fdd2ddb826cc8d8436f}{remove}} (int const)
+\item 
+bool \mbox{\hyperlink{class_avl_tree_af8f43d1139179e490fffbdd03f7735ac}{is\+Balanced}} ()
+\item 
+void \mbox{\hyperlink{class_avl_tree_a0c18b4848eb2a6d5876afb6ea203b7f1}{show}} ()
+\begin{DoxyCompactList}\small\item\em calls \mbox{\hyperlink{class_avl_tree_ab468a9e24161484f610c4193256d4f00}{show(\+Avl\+Tree\+::\+Node$\ast$, int)}} with the head. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_avl_tree_ab468a9e24161484f610c4193256d4f00}{show}} (Avl\+Tree\+::\+Node $\ast$, int)
+\begin{DoxyCompactList}\small\item\em creates recursive a tree on the console. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \& \mbox{\hyperlink{class_avl_tree_a7e8543fa39fcd41bf8738b1384658b3f}{operator+=}} (\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \&, int const)
+\item 
+\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \& \mbox{\hyperlink{class_avl_tree_aebcb43fe34dc651b0907a6cdeca29946}{operator-\/=}} (\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \&, int const)
+\item 
+ostream \& \mbox{\hyperlink{class_avl_tree_a294c728291996899d248fb8ea9c9a038}{operator$<$$<$}} (ostream \&, \mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \&)
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_avl_tree_ada89cb30925d36a56e3aab8768752468}\label{class_avl_tree_ada89cb30925d36a56e3aab8768752468}} 
+\index{Avl\+Tree@{Avl\+Tree}!````~Avl\+Tree@{$\sim$\+Avl\+Tree}}
+\index{````~Avl\+Tree@{$\sim$\+Avl\+Tree}!Avl\+Tree@{Avl\+Tree}}
+\subsubsection{\texorpdfstring{$\sim$\+Avl\+Tree()}{~AvlTree()}}
+{\footnotesize\ttfamily Avl\+Tree\+::$\sim$\+Avl\+Tree (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor for the tree. Deletes also all nodes. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_avl_tree_a251736611b07cd83fe02f399288fc92e}\label{class_avl_tree_a251736611b07cd83fe02f399288fc92e}} 
+\index{Avl\+Tree@{Avl\+Tree}!insert@{insert}}
+\index{insert@{insert}!Avl\+Tree@{Avl\+Tree}}
+\subsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily bool Avl\+Tree\+::insert (\begin{DoxyParamCaption}\item[{int const}]{new\+Key }\end{DoxyParamCaption})}
+
+Inserts a new node into the tree. \begin{DoxyReturn}{Returns}
+true if node was inserted, false if not (Already exists)
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Key} & the new entry for the tree. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true, if the new\+Key is connected to the tree now. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_avl_tree_af8f43d1139179e490fffbdd03f7735ac}\label{class_avl_tree_af8f43d1139179e490fffbdd03f7735ac}} 
+\index{Avl\+Tree@{Avl\+Tree}!is\+Balanced@{is\+Balanced}}
+\index{is\+Balanced@{is\+Balanced}!Avl\+Tree@{Avl\+Tree}}
+\subsubsection{\texorpdfstring{is\+Balanced()}{isBalanced()}}
+{\footnotesize\ttfamily bool Avl\+Tree\+::is\+Balanced (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Tests whether the tree is balanced (or not). Only for testing and debug purpose. Performance is aweful! \begin{DoxyReturn}{Returns}
+true if balanced, otherwise false.
+
+true, if the tree is balanced. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_avl_tree_a9f580161de922fdd2ddb826cc8d8436f}\label{class_avl_tree_a9f580161de922fdd2ddb826cc8d8436f}} 
+\index{Avl\+Tree@{Avl\+Tree}!remove@{remove}}
+\index{remove@{remove}!Avl\+Tree@{Avl\+Tree}}
+\subsubsection{\texorpdfstring{remove()}{remove()}}
+{\footnotesize\ttfamily bool Avl\+Tree\+::remove (\begin{DoxyParamCaption}\item[{int const}]{remove\+Key }\end{DoxyParamCaption})}
+
+Removes a node in the tree. \begin{DoxyReturn}{Returns}
+true if it was removed, false if not (not found)
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em remove\+Key} & the key, that should be removed. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_avl_tree_a62f478c45b1505e637617a5a8edb9374}\label{class_avl_tree_a62f478c45b1505e637617a5a8edb9374}} 
+\index{Avl\+Tree@{Avl\+Tree}!search@{search}}
+\index{search@{search}!Avl\+Tree@{Avl\+Tree}}
+\subsubsection{\texorpdfstring{search()}{search()}}
+{\footnotesize\ttfamily bool Avl\+Tree\+::search (\begin{DoxyParamCaption}\item[{int const}]{key }\end{DoxyParamCaption}) const}
+
+Searches for a node in the tree. \begin{DoxyReturn}{Returns}
+true if found.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & of the node, that should be found. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true, if found. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_avl_tree_a0c18b4848eb2a6d5876afb6ea203b7f1}\label{class_avl_tree_a0c18b4848eb2a6d5876afb6ea203b7f1}} 
+\index{Avl\+Tree@{Avl\+Tree}!show@{show}}
+\index{show@{show}!Avl\+Tree@{Avl\+Tree}}
+\subsubsection{\texorpdfstring{show()}{show()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Avl\+Tree\+::show (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+calls \mbox{\hyperlink{class_avl_tree_ab468a9e24161484f610c4193256d4f00}{show(\+Avl\+Tree\+::\+Node$\ast$, int)}} with the head. 
+
+\mbox{\Hypertarget{class_avl_tree_ab468a9e24161484f610c4193256d4f00}\label{class_avl_tree_ab468a9e24161484f610c4193256d4f00}} 
+\index{Avl\+Tree@{Avl\+Tree}!show@{show}}
+\index{show@{show}!Avl\+Tree@{Avl\+Tree}}
+\subsubsection{\texorpdfstring{show()}{show()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Avl\+Tree\+::show (\begin{DoxyParamCaption}\item[{Avl\+Tree\+::\+Node $\ast$}]{node,  }\item[{int}]{offset }\end{DoxyParamCaption})}
+
+
+
+creates recursive a tree on the console. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & the head of the tree  the width of the child. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_avl_tree_a7e8543fa39fcd41bf8738b1384658b3f}\label{class_avl_tree_a7e8543fa39fcd41bf8738b1384658b3f}} 
+\index{Avl\+Tree@{Avl\+Tree}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!Avl\+Tree@{Avl\+Tree}}
+\subsubsection{\texorpdfstring{operator+=}{operator+=}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_avl_tree}{Avl\+Tree}}\& operator+= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \&}]{avl\+Tree,  }\item[{int const}]{avl }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Add operator \begin{DoxyReturn}{Returns}
+a tree with the new key inserted. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_avl_tree_aebcb43fe34dc651b0907a6cdeca29946}\label{class_avl_tree_aebcb43fe34dc651b0907a6cdeca29946}} 
+\index{Avl\+Tree@{Avl\+Tree}!operator-\/=@{operator-\/=}}
+\index{operator-\/=@{operator-\/=}!Avl\+Tree@{Avl\+Tree}}
+\subsubsection{\texorpdfstring{operator-\/=}{operator-=}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_avl_tree}{Avl\+Tree}}\& operator-\/= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \&}]{tree,  }\item[{int const}]{avl }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Remove operator \begin{DoxyReturn}{Returns}
+a tree without the key to delete. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_avl_tree_a294c728291996899d248fb8ea9c9a038}\label{class_avl_tree_a294c728291996899d248fb8ea9c9a038}} 
+\index{Avl\+Tree@{Avl\+Tree}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Avl\+Tree@{Avl\+Tree}}
+\subsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily ostream\& operator$<$$<$ (\begin{DoxyParamCaption}\item[{ostream \&}]{stream,  }\item[{\mbox{\hyperlink{class_avl_tree}{Avl\+Tree}} \&}]{tree }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Outputs the tree. \begin{DoxyReturn}{Returns}
+the stream containing the output information. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+avltree/\mbox{\hyperlink{library_8h}{library.\+h}}\item 
+avltree/\mbox{\hyperlink{library_8cpp}{library.\+cpp}}\end{DoxyCompactItemize}
