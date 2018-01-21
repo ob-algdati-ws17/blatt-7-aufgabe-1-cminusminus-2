@@ -3,6 +3,65 @@
 
 using namespace std;
 
+TEST(AvlTreeTest,INSERT_RIGHT_LEFT_ROTATION) {
+    AvlTree tree;
+    tree.insert(5);
+    tree.insert(6);
+    tree.insert(13);
+    tree.insert(12);
+    tree.insert(11);
+    tree.insert(10);
+    ASSERT_TRUE(tree.isBalanced());
+   // tree.insert(11);
+   // tree.insert(9);
+    //          5
+    //      3       10
+    //    2  4          11
+    //
+}
+
+TEST(AvlTreeTest,INSERT_LEFT_RIGHT_ROTATION) {
+    AvlTree tree;
+    tree.insert(10);
+    tree.insert(5);
+    tree.insert(15);
+    tree.insert(7);
+    tree.insert(2);
+    tree.insert(6);
+    ASSERT_TRUE(tree.isBalanced());
+}
+
+TEST(AvlTreeTest, Remove_RotateLeftRight) {
+    AvlTree tree;
+    tree += 20;
+    tree += 10;
+    tree += 30;
+    tree += 15;
+    tree += 5;
+    tree += 40;
+    tree += 2;
+    tree += 7;
+    tree -= 15;
+    ASSERT_TRUE(tree.isBalanced());
+}
+
+TEST(AvlTreeTest, Remove_RotateRechtsLinks) {
+    AvlTree tree;
+    tree += 20;
+    tree += 25;
+    tree += 15;
+    tree += 5;
+    tree += 40;
+    tree += 22;
+    tree += 38;
+    tree += 45;
+    tree.show();
+    tree -= 22;
+    tree.show();
+    ASSERT_TRUE(tree.isBalanced());
+}
+
+
 TEST(AvlTreeTest, NewInsert) {
     AvlTree tree;
     EXPECT_TRUE(tree.insert(2));
