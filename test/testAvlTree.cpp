@@ -13,7 +13,19 @@ TEST(AvlTreeTest, remove_leaf) {
     tree.insert(8);
     tree.insert(20);
     tree.remove(8);
-    tree.show();
+    EXPECT_TRUE(tree.isBalanced());
+}
+
+TEST(AvlTreeTest, remove_leaf1) {
+    AvlTree tree;
+    tree.insert(20);
+    tree.insert(10);
+    tree.insert(25);
+    tree.insert(30);
+    tree.insert(22);
+    tree.insert(15);
+    tree.insert(17);
+    tree.remove(17);
     EXPECT_TRUE(tree.isBalanced());
 }
 
