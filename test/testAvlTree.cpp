@@ -20,6 +20,23 @@ TEST(AvlTreeTest, remove_leaf) {
     EXPECT_TRUE(tree.isBalanced());
 }
 
+TEST(AvlTreeTest, remove_l) {
+    AvlTree tree;
+    tree.insert(30);
+    tree.insert(10);
+    tree.insert(35);
+    tree.insert(40);
+    tree.insert(31);
+    tree.insert(8);
+    tree.show();
+    cout << "\n" << endl;
+    tree.insert(2);
+    tree.show();
+    cout << "\n" << endl;
+    tree.remove(31);
+    EXPECT_TRUE(tree.isBalanced());
+}
+
 TEST(AvlTreeTest, removeTester) {
     AvlTree tree;
     tree.insert(15);
