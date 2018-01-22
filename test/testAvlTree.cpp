@@ -25,6 +25,7 @@ TEST(AvlTreeTest, remove_check) {
     tree.insert(27);
     tree.insert(10);
     tree.remove(25);
+    tree.remove(22);
     ASSERT_TRUE(tree.isBalanced());
 }
 
