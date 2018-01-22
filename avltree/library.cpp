@@ -14,9 +14,9 @@ AvlTree::Node::Node(int const val) :
 /*
  * Constructor
  */
-AvlTree::Node::Node(int const val, Node *left, Node *right) :
-    key(val), left(left), right(right) {
-}
+//AvlTree::Node::Node(int const val, Node *left, Node *right) :
+//    key(val), left(left), right(right) {
+//}
 
 /*
  * Destructor

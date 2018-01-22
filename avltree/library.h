@@ -10,7 +10,7 @@ private:
     struct Node {
         ~Node();
         Node(int const);
-        Node(int const, Node *, Node *);
+   //     Node(int const, Node *, Node *);
 
         int childs() const;
         int key;

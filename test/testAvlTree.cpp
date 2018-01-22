@@ -20,6 +20,12 @@ TEST(AvlTreeTest, remove_leaf) {
     EXPECT_TRUE(tree.isBalanced());
 }
 
+TEST(AvlTreeTest, constructor) {
+    AvlTree node;
+    node.insert(10);
+
+}
+
 TEST(AvlTreeTest, remove_l) {
     AvlTree tree;
     tree.insert(30);
