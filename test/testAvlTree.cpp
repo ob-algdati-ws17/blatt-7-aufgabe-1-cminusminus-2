@@ -3,6 +3,17 @@
 
 using namespace std;
 
+TEST(AvlTreeTest, remove_Check) {
+    AvlTree tree;
+    tree.insert(10);
+    tree.insert(8);
+    tree.insert(17);
+    tree.insert(7);
+    tree.insert(19);
+    tree.remove(19);
+    ASSERT_TRUE(tree.isBalanced());
+}
+
 TEST(AvlTreeTest, remove_leaf) {
     AvlTree tree;
     tree.insert(15);
@@ -18,12 +29,6 @@ TEST(AvlTreeTest, remove_leaf) {
     cout << "\n" << endl;
     tree.remove(8);
     EXPECT_TRUE(tree.isBalanced());
-}
-
-TEST(AvlTreeTest, constructor) {
-    AvlTree node;
-    node.insert(10);
-
 }
 
 TEST(AvlTreeTest, remove_l) {
