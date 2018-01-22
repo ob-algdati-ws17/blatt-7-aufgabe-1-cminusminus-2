@@ -11,7 +11,11 @@ TEST(AvlTreeTest, remove_leaf) {
     tree.insert(7);
     tree.insert(12);
     tree.insert(8);
+    tree.show();
+    cout << "\n" << endl;
     tree.insert(20);
+    tree.show();
+    cout << "\n" << endl;
     tree.remove(8);
     EXPECT_TRUE(tree.isBalanced());
 }
@@ -25,9 +29,25 @@ TEST(AvlTreeTest, remove_leaf1) {
     tree.insert(22);
     tree.insert(15);
     tree.insert(17);
+    tree.show();
     tree.remove(22);
     EXPECT_TRUE(tree.isBalanced());
 }
+
+TEST(AvlTreeTest, remove_leaf2) {
+    AvlTree tree;
+    tree.insert(20);
+    tree.insert(25);
+    tree.insert(10);
+    tree.insert(7);
+    tree.insert(12);
+    tree.insert(21);
+    tree.show();
+    tree.remove(21);
+    EXPECT_TRUE(tree.isBalanced());
+}
+
+
 
 /*TEST(AvlTreeTest, remove) {
     AvlTree tree;
