@@ -24,7 +24,8 @@ before_script:
     - cmake ..
 
 script:
-    - cmake CMakeLists.txt && make && make test
+    - make
+    - test/testAvlTree
     
 after_success:
   - coveralls --root .. -E ".*googletest-src.*" -E ".*gtest.*" -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*"
