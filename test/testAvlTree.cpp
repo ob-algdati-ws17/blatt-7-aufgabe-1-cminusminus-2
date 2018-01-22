@@ -10,7 +10,9 @@ TEST(AvlTreeTest, remove_Check) {
     tree.insert(17);
     tree.insert(7);
     tree.insert(19);
-    tree.remove(19);
+    tree.show();
+    tree.remove(17);
+    tree.show();
     ASSERT_TRUE(tree.isBalanced());
 }
 
