@@ -111,12 +111,6 @@ public:
     friend AvlTree &operator-=(AvlTree &, int const);
 
     /*
-     * Outputs the tree.
-     * return the stream containing the output information.
-     */
-     friend ostream  &operator<<(ostream &, AvlTree &);
-
-    /*
      * Tests whether the tree is balanced (or not). Only for testing and debug purpose. Performance is aweful!
      * return true if balanced, otherwise false.
      */

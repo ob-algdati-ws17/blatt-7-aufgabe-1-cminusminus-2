@@ -440,8 +440,3 @@ void AvlTree::show(AvlTree::Node *node, int offset) {
         show(node->left, offset + 5);
     }
 }
-
-ostream &operator<<(ostream &stream, AvlTree &tree) {
-    tree.show();
-    return cout;
-};

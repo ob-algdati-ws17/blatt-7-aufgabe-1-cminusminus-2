@@ -3,6 +3,15 @@
 
 using namespace std;
 
+TEST(AvlTreeTest, UPOUT) {
+    AvlTree tree;
+    tree.insert(10);
+    tree.insert(15);
+    tree.insert(18);
+    EXPECT_TRUE(tree.isBalanced());
+}
+
+
 TEST(AvlTreeTest,INSERT_RIGHT_LEFT_ROTATION) {
     AvlTree tree;
     tree.insert(5);
