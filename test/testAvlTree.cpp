@@ -12,12 +12,6 @@ TEST(AvlTreeTest,INSERT_RIGHT_LEFT_ROTATION) {
     tree.insert(11);
     tree.insert(10);
     ASSERT_TRUE(tree.isBalanced());
-   // tree.insert(11);
-   // tree.insert(9);
-    //          5
-    //      3       10
-    //    2  4          11
-    //
 }
 
 TEST(AvlTreeTest,INSERT_LEFT_RIGHT_ROTATION) {
